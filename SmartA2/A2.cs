@@ -1,4 +1,5 @@
-﻿using System.IO.Ports;
+﻿using System.ComponentModel;
+using System.IO.Ports;
 using NewLife;
 using NewLife.IoT.Protocols;
 using NewLife.Serial.Protocols;
@@ -10,15 +11,19 @@ public class A2
 {
     #region 属性
     /// <summary>SYS LED 指示灯</summary>
+    [DisplayName("指示灯")]
     public OutputPort Led { get; } = new OutputPort { FileName = "/dev/led" };
 
-    /// <summary>SYS LED 指示灯</summary>
+    /// <summary>蜂鸣器</summary>
+    [DisplayName("蜂鸣器")]
     public OutputPort Buzzer { get; } = new OutputPort { FileName = "/dev/buzzer" };
 
     /// <summary>FUN按键</summary>
+    [DisplayName("FUN按键")]
     public InputPort Key { get; } = new InputPort { FileName = "/dev/key" };
 
     /// <summary>USB电源</summary>
+    [DisplayName("USB电源")]
     public OutputPort UsbPower { get; } = new OutputPort { FileName = "/dev/usbpwr" };
 
     /// <summary>看门狗</summary>

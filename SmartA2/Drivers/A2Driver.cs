@@ -22,6 +22,8 @@ public class A2Driver : DriverBase<Node, PCParameter>
     #region 属性
     /// <summary>是否启用重启。默认false</summary>
     public static Boolean EnableReboot { get; set; }
+
+    private A2 _a2 = new();
     #endregion
 
     #region 方法
@@ -46,6 +48,19 @@ public class A2Driver : DriverBase<Node, PCParameter>
             }
         }
 
+        foreach (var pi in _a2.GetType().GetProperties())
+        {
+            var point = points.FirstOrDefault(e => e.Name.EqualIgnoreCase(pi.Name));
+            if (point != null)
+            {
+                var val = _a2.GetValue(pi);
+                if (val is InputPort inputPort)
+                    dic[point.Name] = inputPort.Read();
+                else if (val is OutputPort outputPort)
+                    dic[point.Name] = outputPort.Read();
+            }
+        }
+
         return dic;
     }
 
@@ -65,6 +80,8 @@ public class A2Driver : DriverBase<Node, PCParameter>
             case nameof(Reboot):
                 if (!EnableReboot) throw new NotSupportedException("未启用重启功能");
                 return Reboot(service.InputData.ToInt()) + "";
+            case "":
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -95,6 +112,11 @@ public class A2Driver : DriverBase<Node, PCParameter>
 
         return -1;
     }
+
+    /// <summary>设置主机名</summary>
+    /// <param name="hostName">主机名</param>
+    [DisplayName("设置主机名")]
+    public void SetHostName(String hostName) => _a2.SetHostName(hostName);
 
     /// <summary>发现本地节点</summary>
     /// <returns></returns>
@@ -134,7 +156,24 @@ public class A2Driver : DriverBase<Node, PCParameter>
         services.Add(ServiceSpec.Create(Reboot));
 
         // A2特有
-        points.Insert(0, PropertySpec.Create("Led", "指示灯", "bool"));
+        foreach (var pi in _a2.GetType().GetProperties())
+        {
+            if (pi.PropertyType == typeof(InputPort))
+            {
+                var pt = PropertySpec.Create(pi);
+                pt.DataType.Type = "bool";
+                pt.AccessMode = "r";
+                points.Add(pt);
+            }
+            else if (pi.PropertyType == typeof(OutputPort))
+            {
+                var pt = PropertySpec.Create(pi);
+                pt.DataType.Type = "bool";
+                pt.AccessMode = "rw";
+                points.Add(pt);
+            }
+        }
+        services.Add(ServiceSpec.Create(SetHostName));
 
         spec.Properties = points.Where(e => e != null).ToArray();
         spec.Services = services.Where(e => e != null).ToArray();

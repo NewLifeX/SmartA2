@@ -25,12 +25,12 @@ public class PCDriverTests
         Assert.NotNull(_spec);
 
         Assert.NotNull(_spec.Profile);
-        Assert.Equal("PC", _spec.Profile.ProductKey);
+        Assert.Equal("SmartA2", _spec.Profile.ProductKey);
         Assert.NotEmpty(_spec.Profile.Version);
 
         var ps = _spec.Properties;
         Assert.NotNull(ps);
-        Assert.Equal(7, ps.Length);
+        Assert.Equal(11, ps.Length);
 
         Assert.NotNull(_spec.Services);
         Assert.Null(_spec.Events);
@@ -48,7 +48,8 @@ public class PCDriverTests
     public void ReadTest()
     {
         var spec = _driver.GetSpecification();
-        var points = spec.Properties.Select(e => new PointModel { Name = e.Id }).ToArray();
+        var points = spec.Properties.Select(e => new PointModel { Name = e.Id, Type = e.DataType.Type }).ToArray();
+        points = points.Where(e => e.Type != "bool").ToArray();
         var rs = _driver.Read(_node, points);
 
         Assert.NotNull(rs);

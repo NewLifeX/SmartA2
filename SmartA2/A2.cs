@@ -1,4 +1,5 @@
-﻿using NewLife;
+﻿using System.IO.Ports;
+using NewLife;
 using NewLife.IoT.Protocols;
 using NewLife.Serial.Protocols;
 
@@ -23,18 +24,34 @@ public class A2
     /// <summary>看门狗</summary>
     public Watchdog Watchdog { get; } = new Watchdog { FileName = "/dev/watchdog" };
 
-    /// <summary>RS485串口1</summary>
-    public Modbus COM1 { get; } = new ModbusRtu { PortName = "/dev/ttyAMA0" };
+    /// <summary>串口名</summary>
+    public String[] ComNames = new[] { "/dev/ttyAMA1", "/dev/ttyAMA0", "/dev/ttyAMA2", "/dev/ttyAMA3" };
+    #endregion
 
-    /// <summary>RS485串口2</summary>
-    public Modbus COM2 { get; } = new ModbusRtu { PortName = "/dev/ttyAMA1" };
+    #region 串口
+    /// <summary>创建串口</summary>
+    /// <param name="com"></param>
+    /// <param name="baudrate"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public SerialPort CreateSerial(Int32 com, Int32 baudrate = 9600)
+    {
+        if (com <= 0 || com > 4) throw new ArgumentOutOfRangeException(nameof(com), $"无效串口COM{com}，支持COM1/COM2/COM3/COM4");
 
-    /// <summary>RS485串口3</summary>
-    public Modbus COM3 { get; } = new ModbusRtu { PortName = "/dev/ttyAMA2" };
+        return new SerialPort(ComNames[com], baudrate);
+    }
 
-    /// <summary>RS485串口4</summary>
-    public Modbus COM4 { get; } = new ModbusRtu { PortName = "/dev/ttyAMA3" };
+    /// <summary>创建Modbus</summary>
+    /// <param name="com"></param>
+    /// <param name="baudrate"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public Modbus CreateModbus(Int32 com, Int32 baudrate = 9600)
+    {
+        if (com <= 0 || com > 4) throw new ArgumentOutOfRangeException(nameof(com), $"无效串口COM{com}，支持COM1/COM2/COM3/COM4");
 
+        return new ModbusRtu { PortName = ComNames[com], Baudrate = baudrate };
+    }
     #endregion
 
     #region 方法

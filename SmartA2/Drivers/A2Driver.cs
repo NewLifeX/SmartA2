@@ -112,6 +112,7 @@ public class A2Driver : DriverBase<Node, PCParameter>
 
         var points = new List<PropertySpec>();
         var services = new List<ServiceSpec>();
+        var extends = new List<PropertyExtend>();
 
         var pis = typeof(MachineInfo).GetProperties();
 
@@ -122,16 +123,20 @@ public class A2Driver : DriverBase<Node, PCParameter>
         points.Add(PropertySpec.Create(pis.FirstOrDefault(e => e.Name == "DownlinkSpeed")));
         points.Add(PropertySpec.Create(pis.FirstOrDefault(e => e.Name == "Temperature")));
         points.Add(PropertySpec.Create(pis.FirstOrDefault(e => e.Name == "Battery")));
-        spec.Properties = points.Where(e => e != null).ToArray();
 
         // 只读
-        foreach (var item in spec.Properties)
+        foreach (var item in points)
         {
             item.AccessMode = "r";
         }
 
         services.Add(ServiceSpec.Create(Speak));
         services.Add(ServiceSpec.Create(Reboot));
+
+        // A2特有
+        points.Insert(0, PropertySpec.Create("Led", "指示灯", "bool"));
+
+        spec.Properties = points.Where(e => e != null).ToArray();
         spec.Services = services.Where(e => e != null).ToArray();
 
         return spec;

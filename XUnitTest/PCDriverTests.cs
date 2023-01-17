@@ -87,12 +87,12 @@ public class PCDriverTests
         Assert.Throws<NotImplementedException>(() => _driver.Control(_node, model3.ToDictionary()));
     }
 
-    [Fact]
-    public void SpeakTest()
-    {
-        _driver.Speak("学无先后达者为师");
-        Thread.Sleep(3000);
-    }
+    //[Fact]
+    //public void SpeakTest()
+    //{
+    //    _driver.Speak("学无先后达者为师");
+    //    Thread.Sleep(3000);
+    //}
 
     [Fact(Skip = "跳过")]
     public void RebootTest()

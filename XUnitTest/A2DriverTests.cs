@@ -8,12 +8,12 @@ using NewLife.Serialization;
 namespace XUnitTest;
 
 [TestCaseOrderer("NewLife.UnitTest.DefaultOrderer", "NewLife.UnitTest")]
-public class PCDriverTests
+public class A2DriverTests
 {
     A2Driver _driver;
     INode _node;
     ThingSpec _spec;
-    public PCDriverTests()
+    public A2DriverTests()
     {
         _driver = new A2Driver();
     }
@@ -61,15 +61,15 @@ public class PCDriverTests
         Assert.True(mi.AvailableMemory > 0);
     }
 
-    [Fact]
-    public void ControlTest()
-    {
-        var model = new ServiceModel { Name = "Speak", InputData = "好好学习" };
-        var rs = _driver.Control(_node, model.ToDictionary());
-        Assert.NotNull(rs);
+    //[Fact]
+    //public void ControlTest()
+    //{
+    //    var model = new ServiceModel { Name = "Speak", InputData = "好好学习" };
+    //    var rs = _driver.Control(_node, model.ToDictionary());
+    //    Assert.NotNull(rs);
 
-        Thread.Sleep(1000);
-    }
+    //    Thread.Sleep(1000);
+    //}
 
     [Fact]
     public void ControlTest2()

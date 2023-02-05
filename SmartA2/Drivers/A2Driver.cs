@@ -38,6 +38,7 @@ public class A2Driver : DriverBase<Node, PCParameter>
         if (points == null || points.Length == 0) return dic;
 
         var mi = MachineInfo.GetCurrent();
+        mi.Refresh();
 
         foreach (var pi in mi.GetType().GetProperties())
         {
@@ -74,13 +75,14 @@ public class A2Driver : DriverBase<Node, PCParameter>
 
         switch (service.Name)
         {
-            case nameof(Speak):
-                Speak(service.InputData);
-                break;
+            //case nameof(Speak):
+            //    Speak(service.InputData);
+            //    break;
             case nameof(Reboot):
                 if (!EnableReboot) throw new NotSupportedException("未启用重启功能");
                 return Reboot(service.InputData.ToInt()) + "";
-            case "":
+            case nameof(SetHostName):
+                SetHostName(service.InputData);
                 break;
             default:
                 throw new NotImplementedException();
@@ -89,28 +91,28 @@ public class A2Driver : DriverBase<Node, PCParameter>
         return "OK";
     }
 
-    /// <summary>语音播报</summary>
-    /// <param name="text"></param>
-    [DisplayName("语音播报")]
-    public void Speak(String text) => text.SpeakAsync();
+    ///// <summary>语音播报</summary>
+    ///// <param name="text"></param>
+    //[DisplayName("语音播报")]
+    //public void Speak(String text) => text.SpeakAsync();
 
     /// <summary>重启计算机</summary>
     /// <param name="timeout"></param>
     [DisplayName("重启计算机")]
     public Int32 Reboot(Int32 timeout)
     {
-        if (Runtime.Windows)
-        {
-            var p = "shutdown".ShellExecute($"-r -t {timeout}");
-            return p?.Id ?? 0;
-        }
-        else if (Runtime.Linux)
-        {
-            var p = "reboot".ShellExecute();
-            return p?.Id ?? 0;
-        }
+        //if (Runtime.Windows)
+        //{
+        //    var p = "shutdown".ShellExecute($"-r -t {timeout}");
+        //    return p?.Id ?? 0;
+        //}
+        //else if (Runtime.Linux)
+        //{
+        var p = "reboot".ShellExecute();
+        return p?.Id ?? 0;
+        //}
 
-        return -1;
+        //return -1;
     }
 
     /// <summary>设置主机名</summary>
@@ -152,8 +154,9 @@ public class A2Driver : DriverBase<Node, PCParameter>
             item.AccessMode = "r";
         }
 
-        services.Add(ServiceSpec.Create(Speak));
+        //services.Add(ServiceSpec.Create(Speak));
         services.Add(ServiceSpec.Create(Reboot));
+        services.Add(ServiceSpec.Create(SetHostName));
 
         // A2特有
         foreach (var pi in _a2.GetType().GetProperties())

@@ -30,12 +30,12 @@ public class A2
     public Watchdog Watchdog { get; } = new Watchdog { FileName = "/dev/watchdog" };
 
     /// <summary>串口名</summary>
-    public String[] ComNames = new[] { "/dev/ttyAMA1", "/dev/ttyAMA0", "/dev/ttyAMA2", "/dev/ttyAMA3" };
+    public String[] ComNames = new[] { "/dev/ttyAMA0", "/dev/ttyAMA1", "/dev/ttyAMA2", "/dev/ttyAMA3" };
     #endregion
 
     #region 串口
     /// <summary>创建串口</summary>
-    /// <param name="com"></param>
+    /// <param name="com">串口COM1/COM2/COM3/COM4，全部支持RS485，其中COM3/COM4复用RS232</param>
     /// <param name="baudrate"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>

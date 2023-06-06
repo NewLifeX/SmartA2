@@ -30,12 +30,12 @@ public class A2
     public Watchdog Watchdog { get; } = new Watchdog { FileName = "/dev/watchdog" };
 
     /// <summary>串口名</summary>
-    public String[] ComNames = new[] { "/dev/ttyAMA1", "/dev/ttyAMA0", "/dev/ttyAMA2", "/dev/ttyAMA3" };
+    public String[] ComNames = new[] { "/dev/ttyAMA0", "/dev/ttyAMA1", "/dev/ttyAMA2", "/dev/ttyAMA3" };
     #endregion
 
     #region 串口
     /// <summary>创建串口</summary>
-    /// <param name="com"></param>
+    /// <param name="com">串口COM1/COM2/COM3/COM4，全部支持RS485，其中COM3/COM4复用RS232</param>
     /// <param name="baudrate"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -43,7 +43,7 @@ public class A2
     {
         if (com <= 0 || com > 4) throw new ArgumentOutOfRangeException(nameof(com), $"无效串口COM{com}，支持COM1/COM2/COM3/COM4");
 
-        return new SerialPort(ComNames[com], baudrate);
+        return new SerialPort(ComNames[com - 1], baudrate);
     }
 
     /// <summary>创建Modbus</summary>
@@ -55,7 +55,7 @@ public class A2
     {
         if (com <= 0 || com > 4) throw new ArgumentOutOfRangeException(nameof(com), $"无效串口COM{com}，支持COM1/COM2/COM3/COM4");
 
-        return new ModbusRtu { PortName = ComNames[com], Baudrate = baudrate };
+        return new ModbusRtu { PortName = ComNames[com - 1], Baudrate = baudrate };
     }
     #endregion
 
@@ -83,7 +83,7 @@ public class A2
             foreach (var line in lines)
             {
                 var ss = line.Split(' ', '\t');
-                if (ss[0] == "127.0.0.1" && ss[ss.Length - 1] == name)
+                if (ss[0] == "127.0.0.1" && ss[^1] == name)
                 {
                     flag = true;
                     break;

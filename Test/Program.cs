@@ -1,6 +1,7 @@
 ﻿using NewLife.IoT.Drivers;
 using NewLife.IoT.ThingModels;
 using NewLife.Log;
+using SmartA2;
 using SmartA2.Drivers;
 
 XTrace.UseConsole();
@@ -38,3 +39,13 @@ foreach (var item in dic)
 }
 
 driver.Close(node);
+
+var a2 = new A2();
+var usb = a2.UsbPower;
+for (var i = 0; i < 100; i++)
+{
+    usb.Write(true);
+    Thread.Sleep(500);
+    usb.Write(false);
+    Thread.Sleep(500);
+}

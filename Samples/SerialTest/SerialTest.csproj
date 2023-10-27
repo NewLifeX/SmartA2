@@ -14,12 +14,14 @@
     <OutputPath>..\..\Bin\SerialTest</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NewLife.Core" Version="10.6.2023.1001" />
-    <PackageReference Include="System.IO.Ports" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SmartA2\SmartA2.csproj" />
   </ItemGroup>
 
 </Project>

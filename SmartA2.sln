@@ -54,6 +54,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serial2NetClientTest", "Sam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serial2NetServerTest", "Samples\Serial2NetServerTest\Serial2NetServerTest.csproj", "{C26767B7-9386-4EF3-8625-FCD3BB403066}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseTest", "Samples\DatabaseTest\DatabaseTest.csproj", "{28EA2FED-6D21-47A3-AA97-5B06BC66919A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +110,10 @@ Global
 		{C26767B7-9386-4EF3-8625-FCD3BB403066}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C26767B7-9386-4EF3-8625-FCD3BB403066}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C26767B7-9386-4EF3-8625-FCD3BB403066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28EA2FED-6D21-47A3-AA97-5B06BC66919A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28EA2FED-6D21-47A3-AA97-5B06BC66919A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28EA2FED-6D21-47A3-AA97-5B06BC66919A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28EA2FED-6D21-47A3-AA97-5B06BC66919A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +136,7 @@ Global
 		{5BE54C41-A5D4-4255-986F-5FB9CE486BFE} = {3DB3FAF5-8F1A-44EB-A407-025A4AB19AB0}
 		{DE468AF1-CA80-4B4C-88FD-2AE016C4F970} = {5BE54C41-A5D4-4255-986F-5FB9CE486BFE}
 		{C26767B7-9386-4EF3-8625-FCD3BB403066} = {5BE54C41-A5D4-4255-986F-5FB9CE486BFE}
+		{28EA2FED-6D21-47A3-AA97-5B06BC66919A} = {C1A2B597-61C1-4A4B-AF34-A6E808B89522}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {323831A1-A95B-40AB-B9AD-36A0BC10C2CB}

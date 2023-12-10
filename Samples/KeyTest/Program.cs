@@ -1,6 +1,6 @@
-﻿using SmartA2;
+﻿using NewLife.IoT.Controllers;
 
-var key = new InputPort { FileName = "/dev/key" };
+var key = new FileInputPort("/dev/key");
 
 var f = false;
 for (var i = 0; i < 100; i++)

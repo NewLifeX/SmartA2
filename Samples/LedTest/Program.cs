@@ -1,6 +1,6 @@
-﻿using SmartA2;
+﻿using NewLife.IoT.Controllers;
 
-var led = new OutputPort { FileName = "/dev/led" };
+var led = new FileOutputPort("/dev/led");
 
 while (true)
 {

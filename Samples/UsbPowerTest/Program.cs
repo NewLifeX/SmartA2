@@ -1,7 +1,7 @@
-﻿using SmartA2;
+﻿using NewLife.IoT.Controllers;
 
 // USB口电源控制，可用于控制外部USB设备上电。如风扇、灯光、水泵等
-var usb = new OutputPort { FileName = "/dev/usbpwr" };
+var usb = new FileOutputPort("/dev/usbpwr");
 
 // 上电
 usb.Write(true);

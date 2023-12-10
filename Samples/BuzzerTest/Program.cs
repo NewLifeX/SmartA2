@@ -1,6 +1,6 @@
-﻿using SmartA2;
+﻿using NewLife.IoT.Controllers;
 
-var buzzer = new OutputPort { FileName = "/dev/buzzer" };
+var buzzer = new FileOutputPort("/dev/buzzer");
 
 for (var i = 0; i < 5; i++)
 {

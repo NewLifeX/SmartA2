@@ -4,7 +4,7 @@ using NewLife.Log;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main(String[] args)
     {
         XTrace.UseConsole();
 

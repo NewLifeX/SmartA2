@@ -1,6 +1,6 @@
-﻿using System.IO.Ports;
-using NewLife;
+﻿using NewLife;
 using NewLife.Data;
+using NewLife.IoT.Controllers;
 using NewLife.Log;
 using NewLife.Net;
 using SmartA2;
@@ -9,10 +9,10 @@ using SmartA2;
 
 internal class Program
 {
-    static SerialPort _serial;
+    static ISerialPort _serial;
     static ISocketRemote _client;
 
-    private static void Main(string[] args)
+    private static void Main(String[] args)
     {
         XTrace.UseConsole();
 
@@ -20,7 +20,7 @@ internal class Program
 
         // 配置并打开串口COM1
         var serial = host.CreateSerial(Coms.COM1, 9600);
-        serial.DataReceived += OnReceiveSerial;
+        serial.Received += Serial_Received;
         serial.Open();
 
         // 服务器地址，可保存在配置文件中，支持tcp/udp地址
@@ -38,19 +38,16 @@ internal class Program
         Console.ReadLine();
     }
 
-    static void OnReceiveSerial(Object sender, SerialDataReceivedEventArgs e)
+    private static void Serial_Received(Object sender, ReceivedEventArgs e)
     {
-        // 等一会儿，等待数据接收完毕
-        Thread.Sleep(10);
+        var pk = e.Packet;
+        if (pk.Total == 0) return;
 
-        var sp = sender as SerialPort;
-        var buf = new Byte[sp.BytesToRead];
-        var count = sp.Read(buf, 0, buf.Length);
-        if (count <= 0) return;
+        var buf = pk.ReadBytes();
 
         // 发送串口数据到服务器
-        var pk = new Packet(buf, 0, count);
-        _client.Send(pk);
+        var rs = new Packet(buf, 0, buf.Length);
+        _client.Send(rs);
     }
 
     static void OnReceiveSocket(Object sender, ReceivedEventArgs e)

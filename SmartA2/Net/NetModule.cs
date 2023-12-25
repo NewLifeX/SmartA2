@@ -56,9 +56,11 @@ public class NetModule : DisposeBase
         XTrace.WriteLine("=> {0}", data.ToHex("-"));
 #endif
 
+        var rs = new Byte[1024];
+        if (_socket.Available > 0) _socket.Receive(rs);
+
         _socket.Send(data);
 
-        var rs = new Byte[1024];
         var count = _socket.Receive(rs);
         if (count == 0) return null;
 
@@ -66,31 +68,15 @@ public class NetModule : DisposeBase
         XTrace.WriteLine("<= {0}", rs.ToHex("-", 0, count));
 #endif
 
-        var ms = new MemoryStream(rs);
+        var ms = new MemoryStream(rs, 0, count);
         var reader = new Binary { Stream = ms, IsLittleEndian = false, EncodeInt = false, TrimZero = true };
         if (reader.ReadFixedString(3) != "HTR") return null;
 
-        cmd = reader.ReadUInt16();
-        var result = reader.ReadUInt16();
+        var cmd2 = reader.ReadUInt16();
+        var code = reader.ReadUInt16();
         var str = reader.ReadFixedString(-1);
-        //var dt = reader.ReadBytes(-1);
-        //var str = dt.ToStr();
 
-        ////var len = -1;
-        ////var buf = reader.ReadBytes(len);
-        ////if (len < 0) len = buf.Length;
-
-        ////// 剔除头尾非法字符
-        ////Int32 s, e;
-        ////for (s = 0; s < len && (buf[s] == 0x00 || buf[s] == 0xFF); s++) ;
-        ////for (e = len - 1; e >= 0 && (buf[e] == 0x00 || buf[e] == 0xFF); e--) ;
-
-        ////XTrace.WriteLine("s={0} e={1}", s, e);
-        ////var str = buf.ToStr(null, s, e - s + 1);
-
-        //XTrace.WriteLine("cmd={0} result={1} str={2}", cmd, result, str);
-
-        return new NetResult { Cmd = cmd, Result = result, Message = str };
+        return new NetResult { Cmd = cmd2, Code = code, Message = str };
     }
     #endregion
 
@@ -98,7 +84,7 @@ public class NetModule : DisposeBase
     public String GetInfo()
     {
         var rs = Send(51, new Byte[0]);
-        if (rs == null) return null;
+        if (rs == null || rs.Code != 0) return null;
 
         return rs.Message;
     }
@@ -119,12 +105,12 @@ public class NetModule : DisposeBase
         return rs.Message;
     }
 
-    public Int32 GetCSQ()
+    public String GetCSQ()
     {
         var rs = Send(102, new Byte[0]);
-        if (rs == null) return -1;
+        if (rs == null) return null;
 
-        return rs.Result;
+        return rs.Message;
     }
 
     public String GetCOPS()

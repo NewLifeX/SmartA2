@@ -69,14 +69,28 @@ static void Test3()
     module.Open();
 
     XTrace.WriteLine("Info:\t{0}", module.GetInfo());
-    XTrace.WriteLine("IMEI:\t{0}", module.GetIMEI());
-    XTrace.WriteLine("IMSI:\t{0}", module.GetIMSI());
-    XTrace.WriteLine("CSQ:\t{0}", module.GetCSQ());
-    XTrace.WriteLine("COPS:\t{0}", module.GetCOPS());
-    XTrace.WriteLine("ICCID:\t{0}", module.GetICCID());
-    XTrace.WriteLine("LACCI:\t{0}", module.GetLACCI());
-    XTrace.WriteLine("LBS:\t{0}", module.GetLBS());
+
+    //Thread.Sleep(1000);
     XTrace.WriteLine("Version:\t{0}", module.GetVersion());
+    //Thread.Sleep(1000);
     XTrace.WriteLine("State:\t{0}", module.GetState());
 
+    //Thread.Sleep(1000);
+    XTrace.WriteLine("IMEI:\t{0}", module.GetIMEI());
+    //Thread.Sleep(1000);
+    XTrace.WriteLine("IMSI:\t{0}", module.GetIMSI());
+
+    //Thread.Sleep(1000);
+    XTrace.WriteLine("CSQ:\t{0}", module.GetCSQ());
+    //Thread.Sleep(1000);
+    XTrace.WriteLine("COPS:\t{0}", module.GetCOPS());
+
+    //Thread.Sleep(1000);
+    XTrace.WriteLine("ICCID:\t{0}", module.GetICCID());
+
+    //Thread.Sleep(1000);
+    XTrace.WriteLine("LACCI:\t{0}", module.GetLACCI());
+
+    //Thread.Sleep(1000);
+    XTrace.WriteLine("LBS:\t{0}", module.GetLBS());
 }

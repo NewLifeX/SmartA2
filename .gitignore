@@ -18,9 +18,7 @@ bld/
 /Data
 /Log
 *.log
-*.htm
 *.nuspec
 *.nupkg
-/BinTest
-/BinUnitTest
-/Samples/DatabaseTest/Entity/Config
+Config/
+Log/

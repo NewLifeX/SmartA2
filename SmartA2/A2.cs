@@ -2,6 +2,7 @@
 using NewLife;
 using NewLife.IoT.Controllers;
 using NewLife.Serial.Protocols;
+using SmartA2.Net;
 
 namespace SmartA2;
 
@@ -143,6 +144,24 @@ public class A2 : Board
             }
             if (!flag) File.AppendAllText(file, $"\r\n127.0.0.1\t{name}\t{name}\r\n");
         }
+    }
+
+    /// <summary>获取网络信息</summary>
+    /// <returns></returns>
+    public NetInfo GetNetInfo()
+    {
+        using var module = new NetModule();
+        module.Open();
+
+        for (var i = 0; i < 3; i++)
+        {
+            var inf = module.GetNetInfo();
+            if (!inf.IMEI.IsNullOrEmpty()) return inf;
+
+            if (i < 3 - 1) Thread.Sleep(1000);
+        }
+
+        return null;
     }
     #endregion
 }

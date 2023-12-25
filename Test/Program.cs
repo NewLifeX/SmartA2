@@ -1,6 +1,7 @@
 ﻿using NewLife.IoT.Drivers;
 using NewLife.IoT.ThingModels;
 using NewLife.Log;
+using NewLife.Serialization;
 using SmartA2;
 using SmartA2.Drivers;
 using SmartA2.Net;
@@ -93,4 +94,13 @@ static void Test3()
 
     //Thread.Sleep(1000);
     XTrace.WriteLine("LBS:\t{0}", module.GetLBS());
+
+    module.Close();
+
+    var n = "-1";
+    XTrace.WriteLine("n={0} n2={1}", n, n.ToInt());
+
+    var a2 = new A2();
+    var inf = a2.GetNetInfo();
+    XTrace.WriteLine(inf.ToJson(true));
 }

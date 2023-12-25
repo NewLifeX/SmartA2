@@ -161,4 +161,20 @@ public class NetModule : DisposeBase
         return rs.Message;
     }
     #endregion
+
+    #region 复合功能
+    /// <summary>获取网络信息</summary>
+    /// <returns></returns>
+    public NetInfo GetNetInfo()
+    {
+        var inf = new NetInfo
+        {
+            IMEI = GetIMEI(),
+            IMSI = GetIMSI(),
+            ICCID = GetICCID(),
+            CSQ = GetCSQ().ToInt(),
+        };
+        return inf;
+    }
+    #endregion
 }

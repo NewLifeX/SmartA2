@@ -9,5 +9,9 @@ public class NetInfo
 
     public String ICCID { get; set; }
 
+    public String COPS { get; set; }
+
     public Int32 CSQ { get; set; }
+
+    public String LACCI { get; set; }
 }

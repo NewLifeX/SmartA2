@@ -73,8 +73,11 @@ public class NetModule : DisposeBase
         if (reader.ReadFixedString(3) != "HTR") return null;
 
         var cmd2 = reader.ReadUInt16();
-        var code = reader.ReadUInt16();
+        var code = (ErrorCodes)reader.ReadUInt16();
         var str = reader.ReadFixedString(-1);
+#if DEBUG
+        XTrace.WriteLine("cmd={0} code={1} message={2}", cmd2, code, str);
+#endif
 
         return new NetResult { Cmd = cmd2, Code = code, Message = str };
     }
@@ -167,13 +170,25 @@ public class NetModule : DisposeBase
     /// <returns></returns>
     public NetInfo GetNetInfo()
     {
-        var inf = new NetInfo
-        {
-            IMEI = GetIMEI(),
-            IMSI = GetIMSI(),
-            ICCID = GetICCID(),
-            CSQ = GetCSQ().ToInt(),
-        };
+        var inf = new NetInfo();
+
+        inf.IMEI = GetIMEI();
+
+        Thread.Sleep(100);
+        inf.IMSI = GetIMSI();
+
+        Thread.Sleep(100);
+        inf.ICCID = GetICCID();
+
+        Thread.Sleep(100);
+        inf.COPS = GetCOPS();
+
+        Thread.Sleep(100);
+        inf.CSQ = GetCSQ().ToInt();
+
+        Thread.Sleep(100);
+        inf.LACCI = GetLACCI();
+
         return inf;
     }
     #endregion

@@ -4,7 +4,7 @@
     <AssemblyTitle>A2工业计算机驱动</AssemblyTitle>
     <Description>IoT驱动，符合IoT标准库的PC驱动，采集CPU、内存、网络等数据，提供语音播报和重启等服务。</Description>
     <Company>新生命开发团队</Company>
-    <Copyright>©2002-2023 新生命开发团队</Copyright>
+    <Copyright>©2002-2024 新生命开发团队</Copyright>
     <VersionPrefix>1.1</VersionPrefix>
     <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
     <Version>$(VersionPrefix).$(VersionSuffix)</Version>
@@ -49,8 +49,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.IoT" Version="2.0.2024.101" />
-    <PackageReference Include="NewLife.ModbusRTU" Version="1.8.2023.1212-beta0414" />
+    <PackageReference Include="NewLife.IoT" Version="2.1.2024.203" />
+    <PackageReference Include="NewLife.ModbusRTU" Version="1.8.2024.217" />
   </ItemGroup>
 
   <ItemGroup>

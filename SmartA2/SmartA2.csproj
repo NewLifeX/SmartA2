@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <AssemblyTitle>A2工业计算机驱动</AssemblyTitle>
     <Description>IoT驱动，符合IoT标准库的PC驱动，采集CPU、内存、网络等数据，提供语音播报和重启等服务。</Description>
     <Company>新生命开发团队</Company>
@@ -49,7 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.IoT" Version="2.2.2024.706" />
+    <PackageReference Include="NewLife.IoT" Version="2.3.2024.1117" />
     <PackageReference Include="NewLife.ModbusRTU" Version="1.8.2024.217" />
   </ItemGroup>
 

@@ -116,7 +116,7 @@ public class A2 : Board
     /// <summary>
     /// 设置主机名
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="name">主机名</param>
     /// <exception cref="ArgumentNullException"></exception>
     public void SetHostName(String name)
     {
@@ -142,7 +142,7 @@ public class A2 : Board
                     break;
                 }
             }
-            if (!flag) File.AppendAllText(file, $"\r\n127.0.0.1\t{name}\t{name}\r\n");
+            if (!flag) File.AppendAllText(file, $"\r\n127.0.0.1\t{name}\r\n");
         }
     }
 

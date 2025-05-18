@@ -13,7 +13,7 @@
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(VersionPrefix).*</AssemblyVersion>
     <Deterministic>false</Deterministic>
-    <OutputPath>..\Bin\Console</OutputPath>
+    <OutputPath>..\Bin\A2Flower</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
@@ -22,6 +22,10 @@
   <ItemGroup>
     <PackageReference Include="NewLife.Core" Version="11.5.2025.501" />
     <PackageReference Include="NewLife.Stardust" Version="3.3.2025.506" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartA2\SmartA2.csproj" />
   </ItemGroup>
 
 </Project>

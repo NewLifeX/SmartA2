@@ -4,7 +4,7 @@ using NewLife.Log;
 using NewLife.Model;
 using NewLife.Remoting.Clients;
 using NewLife.Threading;
-using SmartA4;
+using SmartA2;
 using Stardust;
 using Stardust.Registry;
 
@@ -15,16 +15,16 @@ namespace A2Flower;
 /// </summary>
 public class Worker : IHostedService
 {
-    private readonly A4 _a4;
+    private readonly A2 _a2;
     private readonly AppClient _appClient;
     private readonly IConfigProvider _configProvider;
     private readonly FlowerSetting _setting = new();
     private readonly ITracer _tracer;
     private TimerX _timer;
 
-    public Worker(A4 a4, IRegistry registry, IConfigProvider configProvider, ITracer tracer)
+    public Worker(A2 a4, IRegistry registry, IConfigProvider configProvider, ITracer tracer)
     {
-        _a4 = a4;
+        _a2 = a4;
         _appClient = registry as AppClient;
         _configProvider = configProvider;
         _tracer = tracer;
@@ -36,7 +36,7 @@ public class Worker : IHostedService
         {
             // 绑定参数到配置中心，支持热更新
             _configProvider.LoadAll();
-            if (_configProvider.Keys.Count < 3)
+            if (_configProvider.Keys.Count < 2)
                 _configProvider.Save(_setting);
             else
                 _configProvider.Bind(_setting, true, null);
@@ -44,7 +44,7 @@ public class Worker : IHostedService
             _appClient?.RegisterCommand("test", s => DoWork(s));
 
             // 关闭
-            var usb = _a4.UsbPower;
+            var usb = _a2.UsbPower;
             usb.Write(false);
         }
         catch (Exception ex)
@@ -85,23 +85,15 @@ public class Worker : IHostedService
 
     void DoWork(Object state)
     {
-        XTrace.WriteLine("打开开关");
+        XTrace.WriteLine("打开电源");
 
         using var span = _tracer?.NewSpan("DoWork");
         try
         {
-            var buzzer = _a4.Buzzer;
-            var usb = _a4.UsbPower;
+            var buzzer = _a2.Buzzer;
+            var usb = _a2.UsbPower;
 
-            var t = _setting.BuzzerTime;
-            if (t > 0)
-            {
-                buzzer.Write(true);
-                Thread.Sleep(t);
-                buzzer.Write(false);
-            }
-
-            t = _setting.UsbTime > 0 ? _setting.UsbTime : 3000;
+            var t = _setting.PowerTime > 0 ? _setting.PowerTime : 3000;
             usb.Write(true);
             Thread.Sleep(t);
             usb.Write(false);

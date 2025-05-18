@@ -1,7 +1,7 @@
 ﻿using A2Flower;
 using NewLife.Log;
 using NewLife.Model;
-using SmartA4;
+using SmartA2;
 using Stardust;
 
 //!!! 轻量级控制台项目模板
@@ -13,7 +13,7 @@ XTrace.UseConsole();
 var services = ObjectContainer.Current;
 services.AddStardust();
 
-services.AddSingleton<A4, A4>();
+services.AddSingleton<A2>();
 
 // 注册后台任务 IHostedService
 services.AddHostedService<Worker>();

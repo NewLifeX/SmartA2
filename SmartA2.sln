@@ -56,6 +56,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serial2NetServerTest", "Sam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseTest", "Samples\DatabaseTest\DatabaseTest.csproj", "{28EA2FED-6D21-47A3-AA97-5B06BC66919A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A2Flower", "A2Flower\A2Flower.csproj", "{396E6649-D7D7-0686-210F-8CDE547F3995}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,10 @@ Global
 		{28EA2FED-6D21-47A3-AA97-5B06BC66919A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28EA2FED-6D21-47A3-AA97-5B06BC66919A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28EA2FED-6D21-47A3-AA97-5B06BC66919A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{396E6649-D7D7-0686-210F-8CDE547F3995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{396E6649-D7D7-0686-210F-8CDE547F3995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{396E6649-D7D7-0686-210F-8CDE547F3995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{396E6649-D7D7-0686-210F-8CDE547F3995}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using NewLife.IoT.Drivers;
+﻿using NewLife;
+using NewLife.IoT.Drivers;
 using NewLife.IoT.ThingModels;
 using NewLife.Log;
 using NewLife.Serialization;

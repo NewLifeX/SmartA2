@@ -2,7 +2,7 @@
 
 var led = new FileOutputPort("/dev/led");
 
-while (true)
+for (var i = 0; i < 5; i++)
 {
     // 灭
     led.Write(false);

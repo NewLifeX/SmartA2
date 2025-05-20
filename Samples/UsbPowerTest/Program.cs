@@ -3,12 +3,15 @@
 // USB口电源控制，可用于控制外部USB设备上电。如风扇、灯光、水泵等
 var usb = new FileOutputPort("/dev/usbpwr");
 
-// 上电
-usb.Write(true);
+for (var i = 0; i < 5; i++)
+{
+    // 上电
+    usb.Write(true);
 
-Thread.Sleep(500);
+    Thread.Sleep(500);
 
-// 断电
-usb.Write(false);
+    // 断电
+    usb.Write(false);
 
-Thread.Sleep(500);
+    Thread.Sleep(500);
+}

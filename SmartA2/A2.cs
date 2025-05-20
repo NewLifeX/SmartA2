@@ -43,7 +43,7 @@ public class A2 : Board
     public IOutputPort UsbPower { get; } = new FileOutputPort("/dev/usbpwr");
 
     /// <summary>看门狗</summary>
-    public Watchdog Watchdog { get; } = new Watchdog { FileName = "/dev/watchdog" };
+    public Watchdog Watchdog { get; } = new Watchdog("/dev/watchdog");
 
     /// <summary>串口名</summary>
     public String[] ComNames = ["/dev/ttyAMA0", "/dev/ttyAMA1", "/dev/ttyAMA2", "/dev/ttyAMA3"];

@@ -25,7 +25,7 @@ public class TemperatureSensor
 
     /// <summary>读取从机地址，FF广播</summary>
     /// <returns></returns>
-    public UInt16 ReadAddress() => Modbus.ReadRegister(0xFF, 0x0100, 1).ReadUInt16(false);
+    public UInt16 ReadAddress() => Modbus.ReadRegister(0xFF, 0x0100, 1)[0];
 
     /// <summary>写从机地址，FF广播</summary>
     /// <param name="value"></param>
@@ -37,13 +37,32 @@ public class TemperatureSensor
 
     /// <summary>读取唯一标识</summary>
     /// <returns></returns>
-    public Byte[] ReadID() => Modbus.ReadRegister(Host, 0x0200, 6)?.ReadBytes();
+    public Byte[] ReadID()
+    {
+        var vs = Modbus.ReadRegister(Host, 0x0200, 6);
+        var buf = new Byte[12];
+        // vs中每个元素转为两个字节
+        for (var i = 0; i < vs.Length; i++)
+        {
+            buf[i * 2] = (Byte)(vs[i] >> 8);
+            buf[i * 2 + 1] = (Byte)(vs[i] & 0xFF);
+        }
+        return buf;
+    }
 
     /// <summary>读取硬件和软件版本</summary>
     /// <returns></returns>
     public (String hardware, String software) ReadVersion()
     {
-        var buf = Modbus.ReadRegister(Host, 0x0206, 4).ReadBytes();
+        var vs = Modbus.ReadRegister(Host, 0x0206, 4);
+        var buf = new Byte[8];
+        // vs中每个元素转为两个字节
+        for (var i = 0; i < vs.Length; i++)
+        {
+            buf[i * 2] = (Byte)(vs[i] >> 8);
+            buf[i * 2 + 1] = (Byte)(vs[i] & 0xFF);
+        }
+
         var hardware = $"{buf.ToHex(2, 2)}{buf.ToHex(0, 2)}";
         var software = $"{buf.ToHex(6, 2)}{buf.ToHex(4, 2)}";
 

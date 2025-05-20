@@ -2,59 +2,53 @@
 using NewLife;
 using NewLife.Log;
 
-internal class Program
+XTrace.UseConsole();
+
+// 硬件串口对照表
+// COM1：/dev/ttyAMA0
+// COM2：/dev/ttyAMA1
+// COM3：/dev/ttyAMA2
+// COM4：/dev/ttyAMA3
+
+// 列出所有串口
+var ports = SerialPort.GetPortNames();
+XTrace.WriteLine("串口列表[{0}]：", ports.Length);
+foreach (var port in ports)
 {
-    private static void Main(String[] args)
-    {
-        XTrace.UseConsole();
+    XTrace.WriteLine(port);
+}
 
-        // 硬件串口对照表
-        // COM1：/dev/ttyAMA0
-        // COM2：/dev/ttyAMA1
-        // COM3：/dev/ttyAMA2
-        // COM4：/dev/ttyAMA3
+// 配置并打开串口COM1
+var serial = new SerialPort
+{
+    PortName = "/dev/ttyAMA0",
+    BaudRate = 9600,
+};
+// 注册数据接收事件
+serial.DataReceived += OnReceive;
+serial.Open();
 
-        // 列出所有串口
-        var ports = SerialPort.GetPortNames();
-        XTrace.WriteLine("串口列表[{0}]：", ports.Length);
-        foreach (var port in ports)
-        {
-            XTrace.WriteLine(port);
-        }
+// 发送数据
+for (var i = 0; i < 10; i++)
+{
+    XTrace.WriteLine("请输入要发送的数据：");
+    var input = Console.ReadLine();
 
-        // 配置并打开串口COM1
-        var serial = new SerialPort
-        {
-            PortName = "/dev/ttyAMA0",
-            BaudRate = 9600,
-        };
-        // 注册数据接收事件
-        serial.DataReceived += OnReceive;
-        serial.Open();
+    serial.Write(input);
+}
 
-        // 发送数据
-        for (var i = 0; i < 10; i++)
-        {
-            XTrace.WriteLine("请输入要发送的数据：");
-            var input = Console.ReadLine();
+// 关闭串口
+serial.Close();
 
-            serial.Write(input);
-        }
+void OnReceive(Object sender, SerialDataReceivedEventArgs e)
+{
+    // 等一会儿，等待数据接收完毕
+    Thread.Sleep(10);
 
-        // 关闭串口
-        serial.Close();
-    }
+    var sp = sender as SerialPort;
+    var buf = new Byte[sp.BytesToRead];
+    sp.Read(buf, 0, buf.Length);
 
-    static void OnReceive(Object sender, SerialDataReceivedEventArgs e)
-    {
-        // 等一会儿，等待数据接收完毕
-        Thread.Sleep(10);
-
-        var sp = sender as SerialPort;
-        var buf = new Byte[sp.BytesToRead];
-        sp.Read(buf, 0, buf.Length);
-
-        XTrace.WriteLine("收到数据：{0}", buf.ToStr());
-        //XTrace.WriteLine("收到数据：{0}", buf.ToHex());
-    }
+    XTrace.WriteLine("收到数据：{0}", buf.ToStr());
+    //XTrace.WriteLine("收到数据：{0}", buf.ToHex());
 }

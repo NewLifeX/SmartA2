@@ -31,9 +31,9 @@ public class RelayControl
     /// <summary>读取指定点位</summary>
     /// <param name="address"></param>
     /// <returns></returns>
-    public UInt16 Read(Int32 address) => Modbus.ReadCoil(Host, (UInt16)address, 1).ReadUInt16(false);
+    public Boolean Read(Int32 address) => Modbus.ReadCoil(Host, (UInt16)address, 1)[0];
 
     /// <summary>读取所有点位</summary>
     /// <returns></returns>
-    public UInt16 ReadAll() => Modbus.ReadCoil(Host, 0x00FF, 0).ReadUInt16(false);
+    public Boolean[] ReadAll() => Modbus.ReadCoil(Host, 0x00FF, 0);
 }

@@ -49,8 +49,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.IoT" Version="2.4.2025.520-beta1708" />
-    <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2025.516-beta1501" />
+    <PackageReference Include="NewLife.IoT" Version="2.5.2025.522-beta1610" />
+    <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2025.522-beta1626" />
   </ItemGroup>
 
   <ItemGroup>

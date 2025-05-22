@@ -1,5 +1,5 @@
 ﻿using NewLife;
-using NewLife.IoT.Protocols;
+using NewLife.IoT.Controllers;
 
 namespace SmartA2;
 
@@ -7,7 +7,7 @@ namespace SmartA2;
 public class TemperatureSensor
 {
     /// <summary>Modbus对象</summary>
-    public Modbus Modbus { get; set; }
+    public IModbus Modbus { get; set; }
 
     /// <summary>主机地址</summary>
     public Byte Host { get; set; } = 1;

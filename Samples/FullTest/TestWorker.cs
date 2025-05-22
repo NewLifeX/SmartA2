@@ -1,0 +1,101 @@
+﻿using System.IO.Ports;
+using NewLife;
+using NewLife.IoT.Controllers;
+using NewLife.Log;
+using NewLife.Model;
+using SmartA2;
+
+namespace FullTest;
+
+internal class TestWorker(IBoard board) : IHostedService
+{
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        _ = Task.Run(DoWork);
+
+        return Task.CompletedTask;
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+    private async Task DoWork()
+    {
+        var a2 = board as A2;
+
+        XTrace.WriteLine("输入输出测试");
+        {
+            var key = a2.Key;
+            key.KeyDown += (s, e) => XTrace.WriteLine("按键按下");
+            key.KeyUp += (s, e) => XTrace.WriteLine("按键弹起");
+
+            // 闪烁灯光、蜂鸣器若干次
+            var led = a2.Led;
+            //var buzzer = a2.Buzzer;
+            for (var i = 0; i < 5; i++)
+            {
+                led.Write(true);
+                //buzzer.Write(true);
+                await Task.Delay(500);
+
+                led.Write(false);
+                //buzzer.Write(false);
+                await Task.Delay(500);
+            }
+        }
+
+        XTrace.WriteLine("串口测试");
+        {
+            // 列出所有串口
+            var ports = SerialPort.GetPortNames();
+            XTrace.WriteLine("串口列表[{0}]：", ports.Length);
+            foreach (var item in ports)
+            {
+                XTrace.WriteLine(item);
+            }
+
+            // 打开串口并发送数据，然后关闭串口
+            using var port = a2.CreateSerial(Coms.COM1, 115200);
+            port.Open();
+
+            var buf = "Hello NewLife".GetBytes();
+            port.Write(buf, 0, buf.Length);
+        }
+
+        XTrace.WriteLine("温湿度传感器测试");
+        {
+            // 打开Modbus读取数据
+            using var modbus = a2.CreateModbus(Coms.COM2, 9600);
+            var sensor = new TemperatureSensor { Modbus = modbus };
+
+            XTrace.WriteLine("地址：{0:X2}", sensor.ReadAddress());
+            XTrace.WriteLine("标识：{0}", sensor.ReadID().ToHex());
+
+            var (hard, soft) = sensor.ReadVersion();
+            XTrace.WriteLine("硬件：{0}", hard);
+            XTrace.WriteLine("软件：{0}", soft);
+
+            var (temp, humi) = sensor.ReadValues();
+            XTrace.WriteLine("温度：{0:n1}", temp);
+            XTrace.WriteLine("湿度：{0:p1}", humi);
+        }
+
+        XTrace.WriteLine("继电器测试");
+        {
+            // 打开Modbus读取数据
+            using var modbus = a2.CreateModbus(Coms.COM3, 115200);
+            var relay = new RelayControl { Modbus = modbus };
+
+            XTrace.WriteLine("点位1：{0}", relay.Read(1));
+
+            for (var i = 0; i < 4; i++)
+            {
+                for (var j = 0; j < 4; j++)
+                {
+                    relay.Invert(j);
+                }
+
+                await Task.Delay(500);
+            }
+        }
+    }
+}

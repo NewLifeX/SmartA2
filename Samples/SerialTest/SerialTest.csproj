@@ -17,8 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.Core" Version="11.5.2025.501" />
-    <PackageReference Include="NewLife.IoT" Version="2.4.2025.520-beta1708" />
+    <PackageReference Include="NewLife.Core" Version="11.5.2025.519-beta1544" />
+    <PackageReference Include="NewLife.IoT" Version="2.5.2025.522-beta1610" />
   </ItemGroup>
 
   <ItemGroup>

@@ -30,6 +30,10 @@ public class A2 : Board
     [DisplayName("指示灯")]
     public IOutputPort Led { get; } = new FileOutputPort("/dev/led");
 
+    /// <summary>SYS2 LED 指示灯</summary>
+    [DisplayName("指示灯2")]
+    public IOutputPort Led2 { get; } = new FileOutputPort("/dev/led2");
+
     /// <summary>蜂鸣器</summary>
     [DisplayName("蜂鸣器")]
     public IOutputPort Buzzer { get; } = new FileOutputPort("/dev/buzzer");

@@ -30,15 +30,18 @@ internal class TestWorker(IBoard board) : IHostedService
 
             // 闪烁灯光、蜂鸣器若干次
             var led = a2.Led;
-            //var buzzer = a2.Buzzer;
+            var led2 = a2.Led2;
+            var buzzer = a2.Buzzer;
             for (var i = 0; i < 5; i++)
             {
                 led.Write(true);
-                //buzzer.Write(true);
+                led2.Write(true);
+                buzzer.Write(true);
                 await Task.Delay(500);
 
                 led.Write(false);
-                //buzzer.Write(false);
+                led2.Write(false);
+                buzzer.Write(false);
                 await Task.Delay(500);
             }
         }

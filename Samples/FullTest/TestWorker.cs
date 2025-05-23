@@ -1,24 +1,28 @@
 ﻿using System.IO.Ports;
 using NewLife;
 using NewLife.IoT.Controllers;
+using NewLife.IoT.Protocols;
 using NewLife.Log;
 using NewLife.Model;
+using NewLife.Threading;
 using SmartA2;
 
 namespace FullTest;
 
 internal class TestWorker(IBoard board) : IHostedService
 {
+    private TimerX _timer;
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _ = Task.Run(DoWork);
+        //_ = Task.Run(DoWork);
+        _timer = new TimerX(DoWork, null, 1000, 60000) { Async = true };
 
         return Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
-    private async Task DoWork()
+    private async Task DoWork(Object state)
     {
         var a2 = board as A2;
 
@@ -67,7 +71,10 @@ internal class TestWorker(IBoard board) : IHostedService
         XTrace.WriteLine("温湿度传感器测试");
         {
             // 打开Modbus读取数据
-            using var modbus = a2.CreateModbus(Coms.COM2, 9600);
+            using var modbus = a2.CreateModbus(Coms.COM2, 9600) as Modbus;
+#if DEBUG
+            //modbus.Log = XTrace.Log;
+#endif
             var sensor = new TemperatureSensor { Modbus = modbus };
 
             XTrace.WriteLine("地址：{0:X2}", sensor.ReadAddress());
@@ -85,7 +92,10 @@ internal class TestWorker(IBoard board) : IHostedService
         XTrace.WriteLine("继电器测试");
         {
             // 打开Modbus读取数据
-            using var modbus = a2.CreateModbus(Coms.COM3, 115200);
+            using var modbus = a2.CreateModbus(Coms.COM3, 9600) as Modbus;
+#if DEBUG
+            modbus.Log = XTrace.Log;
+#endif
             var relay = new RelayControl { Modbus = modbus };
 
             XTrace.WriteLine("点位1：{0}", relay.Read(1));

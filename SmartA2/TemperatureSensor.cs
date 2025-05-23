@@ -16,9 +16,9 @@ public class TemperatureSensor
     /// <returns></returns>
     public (Double temp, Double humi) ReadValues()
     {
-        var buf = Modbus.ReadRegister(Host, 0x0000, 2);
-        var humi = (Int16)((buf[0] << 8) + buf[1]) / 1000.0;
-        var temp = ((buf[2] << 8) + buf[3]) / 10.0 - 40;
+        var vs = Modbus.ReadRegister(Host, 0x0000, 2);
+        var humi = vs[0] / 1000.0;
+        var temp = vs[1] / 10.0 - 40;
 
         return (temp, humi);
     }

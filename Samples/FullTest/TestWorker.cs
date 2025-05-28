@@ -117,6 +117,18 @@ internal class TestWorker(IBoard board) : IHostedService
 
                 await Task.Delay(500);
             }
+
+            // 翻转
+            for (var i = 0; i < 400; i++)
+            {
+                for (var j = 0; j < 4; j++)
+                {
+                    relay.Invert(j);
+                    await Task.Delay(100);
+                }
+
+                await Task.Delay(500);
+            }
         }
     }
 }

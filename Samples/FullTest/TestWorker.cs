@@ -1,4 +1,5 @@
 ﻿using System.IO.Ports;
+using FullTest.Sensors;
 using NewLife;
 using NewLife.IoT.Controllers;
 using NewLife.IoT.Protocols;
@@ -96,11 +97,13 @@ internal class TestWorker(IBoard board) : IHostedService
 #if DEBUG
             modbus.Log = XTrace.Log;
 #endif
-            var relay = new RelayControl { Modbus = modbus, Host = 0xFF };
-            XTrace.WriteLine("地址：{0:X2}", relay.ReadAddress());
-            //XTrace.WriteLine("波特率：{0:X2}", relay.ReadBaudrate());
+            var relay = new ZhiShengRelayControl { Modbus = modbus, Host = 0x01 };
+            //XTrace.WriteLine("地址：{0:X2}", relay.ReadAddress());
+            ////XTrace.WriteLine("波特率：{0:X2}", relay.ReadBaudrate());
+            //XTrace.WriteLine("软件：{0}", relay.ReadSoftwareVersion());
+            //XTrace.WriteLine("硬件：{0}", relay.ReadHardwareVersion());
 
-            XTrace.WriteLine("点位：{0}", relay.ReadAll(4).Join());
+            //XTrace.WriteLine("点位：{0}", relay.ReadAll(4).Join());
 
             var flag = true;
             for (var i = 0; i < 4; i++)

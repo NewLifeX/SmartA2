@@ -18,7 +18,7 @@ namespace SmartA2.Drivers;
 /// </remarks>
 [Driver("SmartA2")]
 [DisplayName("A2工业计算机")]
-public class A2Driver : DriverBase<Node, PCParameter>
+public class A2Driver : DriverBase<Node, A2Parameter>
 {
     #region 属性
     /// <summary>是否启用重启。默认false</summary>
@@ -137,7 +137,7 @@ public class A2Driver : DriverBase<Node, PCParameter>
 
         var points = new List<PropertySpec>();
         var services = new List<ServiceSpec>();
-        var extends = new List<PropertyExtend>();
+        //var extends = new List<PropertyExtend>();
 
         var pis = typeof(MachineInfo).GetProperties();
 

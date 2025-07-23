@@ -3,6 +3,6 @@
 namespace SmartA2.Drivers;
 
 /// <summary>PC参数</summary>
-public class PCParameter : IDriverParameter
+public class A2Parameter : IDriverParameter
 {
 }

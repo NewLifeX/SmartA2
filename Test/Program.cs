@@ -16,7 +16,7 @@ Console.WriteLine("OK!");
 static void Test1()
 {
     var driver = new A2Driver();
-    var pm = new PCParameter();
+    var pm = new A2Parameter();
 
     //var points = driver.GetDefaultPoints();
     //foreach (var item in points)
@@ -30,7 +30,7 @@ static void Test1()
 static void Test2()
 {
     var driver = new A2Driver();
-    var pm = new PCParameter();
+    var pm = new A2Parameter();
     var node = driver.Open(null, pm);
 
     var point = new PointModel

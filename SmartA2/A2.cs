@@ -51,9 +51,40 @@ public class A2 : Board
 
     /// <summary>串口名</summary>
     public String[] ComNames = ["/dev/ttyAMA0", "/dev/ttyAMA1", "/dev/ttyAMA2", "/dev/ttyAMA3"];
+
+    private IDictionary<String, String> _maps;
+    #endregion
+
+    #region 构造
+    /// <summary>实例化A2</summary>
+    public A2()
+    {
+        _maps = new Dictionary<String, String>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["Led"] = "/dev/led",
+            ["Led2"] = "/dev/led2",
+            ["Buzzer"] = "/dev/buzzer",
+            ["Key"] = "/dev/key",
+            ["UsbPower"] = "/dev/usbpwr",
+            ["Watchdog"] = "/dev/watchdog",
+            ["COM1"] = "/dev/ttyAMA0",
+            ["COM2"] = "/dev/ttyAMA1",
+            ["COM3"] = "/dev/ttyAMA2",
+            ["COM4"] = "/dev/ttyAMA3"
+        };
+    }
     #endregion
 
     #region 端口
+    /// <summary>映射设备名的真实地址</summary>
+    /// <remarks>例如在A2工业计算机中，COM1可映射到/dev/ttyAMA0，项目实施人员仅需配置通用名COM1即可</remarks>
+    public override String Map(String name)
+    {
+        if (_maps.TryGetValue(name, out var value)) return value;
+
+        return base.Map(name);
+    }
+
     /// <summary>创建输出口</summary>
     /// <param name="name"></param>
     /// <returns></returns>

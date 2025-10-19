@@ -17,8 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.MQTT" Version="2.1.2025.601" />
-    <PackageReference Include="NewLife.Stardust" Version="3.4.2025.901" />
+    <PackageReference Include="NewLife.MQTT" Version="2.2.2025.1001" />
+    <PackageReference Include="NewLife.Stardust" Version="3.4.2025.1001" />
   </ItemGroup>
 
   <ItemGroup>
